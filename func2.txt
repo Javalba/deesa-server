@@ -1,1 +1,1 @@
-func2
+func2 2
