@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const User = require('./user');
 const Comment = require('./comment');
 
+const Schema = mongoose.Schema;
+
 
 var designSchema = new mongoose.Schema({
   creator: {

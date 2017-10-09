@@ -5,6 +5,6 @@ var JwtStrategy = passportJWT.Strategy;
 var jwtOptions = {}
 
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
-jwtOptions.secretOrKey = 'ironhack';
+jwtOptions.secretOrKey = 'deesaSecretKey123';
 
 module.exports = jwtOptions;
