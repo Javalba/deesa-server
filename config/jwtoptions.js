@@ -4,7 +4,7 @@ var JwtStrategy = passportJWT.Strategy;
 
 var jwtOptions = {}
 
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
+jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
 jwtOptions.secretOrKey = 'deesaSecretKey123';
 
 module.exports = jwtOptions;
