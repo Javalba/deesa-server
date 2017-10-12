@@ -10,10 +10,14 @@ const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     userInfo: {
-       name: String, surname: String, city: String, country: String, birthday: Date, 
+       name: String, surname: String, birthday: Date, nif: String, language: String,
+       sex: String,  phone1: String, phone2: String, profession: String, clientNum: Number,
+       phoneState: String, mailState: String, 
     },
     addressInfo: {
-       streetName: String 
+      block: String, extraAddress: String, flatNumber: String, floor: String, postalCode: String,
+      provinceCode: String, provinceName: String, stairs: String, streetCode: String, streetName: String,
+      streetNumber: String, townCode: String, townName: String, country: String
     },
     avatarUrl: { type: String, default: '/images/avatar-default.png', },
     googleID: String,

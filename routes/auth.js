@@ -51,19 +51,27 @@ router.get("/token", passport.authenticate('jwt', { session: false }), (req, res
 
 router.post("/signup", (req, res, next) => {
 
-  console.log(`ENTRO AQUI`);
 // Destructure the body
-    let {username, password, email,avatarUrl,googleId,facebookID,role,shoppingCart} = req.body;
-    let {name,surname,city,country,birthday}  = req.body.userInfo;
-    let {streetName}  = req.body.addressInfo;
-    let {method,creditCard}  = req.body.paymentInfo;
-    let {designs,contactMail,website,description,
-      socialMedia: {
-        twitter,facebook,linkedin,instagram}
-      } = req.body.designerInfo;
+    let { username, password, email,avatarUrl,googleId,facebookID,role,shoppingCart} = req.body;
+    
+    let { name, surname, birthday, nif, language,
+         sex, phone1, phone2, profession, clientNum,
+         phoneState, mailState
+        } = req.body.userInfo;
 
-    console.log(`email ${email}`);
-    console.log(`contactMail ${contactMail}`);
+    let { block, extraAddress, flatNumber, floor, postalCode,
+         provinceCode, provinceName, stairs, streetCode, streetName,
+         streetNumber, townCode, townName, country
+        } = req.body.addressInfo;
+    
+    let { method,creditCard}  = req.body.paymentInfo;
+    
+    let { designs,contactMail,website,description,
+          socialMedia: {
+            twitter,facebook,linkedin,instagram
+          }
+        } = req.body.designerInfo;
+
     //console.log(`streetName ${streetName}`);
   if (!username || !password) {
     res.status(400).json({ message: "Provide username and password" });
@@ -84,10 +92,14 @@ router.post("/signup", (req, res, next) => {
       password: hashPass,
       email,
       userInfo: {
-        name,surname, city, country, birthday,
+        name, surname, birthday, nif, language,
+        sex, phone1, phone2, profession, clientNum,
+        phoneState, mailState
       },
       addressInfo:{
-        streetName
+        block, extraAddress, flatNumber, floor, postalCode,
+        provinceCode, provinceName, stairs, streetCode, streetName,
+        streetNumber, townCode, townName, country
       },
       avatarUrl,googleId,facebookID,role,
       paymentInfo:{
