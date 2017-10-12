@@ -11,6 +11,7 @@ const cors = require('cors')();
 const index = require('./routes/index');
 const phones = require('./routes/phones');
 const auth = require('./routes/auth');
+const user = require('./routes/user');
 
 require("dotenv").config();
 
@@ -55,11 +56,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/', index);
 app.use('/', auth);
+app.use('/', user);
 app.use('/api', passport.authenticate('jwt', { session: false }), phones);
 // app.use('/api', phones);
 
 app.use(function(req, res) {
-  res.sendfile(__dirname + '/public/indexx.html');
+  res.sendfile(__dirname + '/public/index.html');
 });
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
