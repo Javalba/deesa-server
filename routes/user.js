@@ -65,7 +65,6 @@ router.post('/account', (req, res, next) => {
                 message: "Error, no user found"
             });
         } else {
-
             //Only send relevant info. 
             let account = {
                 id: user._id,
@@ -76,9 +75,33 @@ router.post('/account', (req, res, next) => {
                 userInfo: {
                     name: user.userInfo.name,
                     surname: user.userInfo.surname,
-                    birthday: user.userInfo.birthday
+                    birthday: user.userInfo.birthday,
+                    sex: user.userInfo.sex ,
+                    phone1: user.userInfo.phone1 ,
+                    phone2: user.userInfo.phone2,
+                    profession: user.userInfo.profession
+                },
+                addressInfo: {
+                    block: user.addressInfo.block,
+                    extraAddress: user.addressInfo.extraAddress,
+                    flatNumber:user.addressInfo.extraAddress ,
+                    floor:user.addressInfo.floor ,
+                    postalCode:user.addressInfo.postalCode ,
+
+                    provinceCode:user.addressInfo.provinceCode ,
+                    provinceName:user.addressInfo.provinceName ,
+                    stairs:user.addressInfo.stairs ,
+                    streetCode:user.addressInfo.streetCode ,
+                    streetName:user.addressInfo.streetName ,
+
+                    streetNumber:user.addressInfo.streetNumber ,
+                    townCode:user.addressInfo.townCode ,
+                    townName:user.addressInfo.townName ,
+                    country:user.addressInfo.country 
                 }
             };
+
+      console.log(`ACCOUNT-:::::::::->${util.inspect(account)}`); 
             res.status(200).json({
                 message: "user info",
                 user: account
@@ -101,8 +124,13 @@ router.put('/account', (req, res, next) => {
             name: req.body.userInfo.name,
             surname: req.body.userInfo.surname,
             birthday: req.body.userInfo.birthday,
+            phone1: req.body.userInfo.phone1 ,
+            phone2: req.body.userInfo.phone2,
+            profession: req.body.userInfo.profession
         }
     }
+    console.log(`UPDTES-:::::::::->${util.inspect(updates)}`);
+    
 
     //console.log(`UPDATES-:::::::::->${util.inspect(updates)}`);
     //DUDA::::: Porque funciona si le paso username sin ser objeto?????
@@ -128,7 +156,10 @@ router.put('/account', (req, res, next) => {
                     userInfo: {
                         name: user.userInfo.name,
                         surname: user.userInfo.surname,
-                        birthday: user.userInfo.birthday
+                        birthday: user.userInfo.birthday,
+                        phone1:  user.userInfo.phone1,
+                        phone2: user.userInfo.phone2,
+                        profession: user.userInfo.profession
                     }
                 };
 
@@ -147,6 +178,7 @@ router.put('/account', (req, res, next) => {
  * UPDATE PASSWORD ACCOUNT
  */
 router.put('/account/password', (req, res, next) => {
+    console.log(`)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))LLEGA A UPDATE PASSWORD`);
     console.log(`REQ-:::::::::->${util.inspect(req.body)}`);
 
     let username = req.body.username;
@@ -189,174 +221,29 @@ router.put('/account/password', (req, res, next) => {
     });
 });
 
-
-/**
- * VIEW USER ADDRESS
- */
-router.post('/account/address', (req, res, next) => {
-
-    console.log(`REQ-:::::::::->${util.inspect(req.body)}`);
-    let username = req.body.username;
-    console.log(`username:${username}`);
-
-    User.findOne({
-        "username": username
-    }, (err, user) => {
-
-        console.log(`user-->${user}`);
-        if (!user) {
-            res.status(401).json({
-                message: "Error, no user found"
-            });
-        } else {
-            console.log('user', user);
-
-            //Only send relevant info. 
-            let account = {
-                id: user._id,
-                username: user.username,
-                role: user.role,
-                addressInfo: {
-                    flatNumber: user.addressInfo.flatNumber,
-                    floor: user.addressInfo.floor,
-                    streetName: user.addressInfo.streetName,
-                    streetNumber: user.addressInfo.streetNumber,
-                    townName: user.addressInfo.townName,
-                    country: user.addressInfo.country
-                }
-            };
-            res.status(200).json({
-                message: "user info",
-                user: account
-            });
-        }
-    })
-});
-
-/**
- * UPDATE USER ADDRESS
- */
-router.put('/account/address', (req, res, next) => {
-    console.log(`REQ-:::::::::->${util.inspect(req.body)}`);
-    let username = req.body.username;
-
-    let updates = {
-        addressInfo: {
-            flatNumber: req.body.addressInfo.flatNumber,
-            floor: req.body.addressInfo.floor,
-            streetName: req.body.addressInfo.streetName,
-            streetNumber: req.body.addressInfo.streetNumber,
-            townName: req.body.addressInfo.townName,
-            country: req.body.addressInfo.country,
-        }
-    }
-
-    console.log(`UPDATES-:::::::::->${util.inspect(updates)}`);
-
-    User.findOneAndUpdate(username, updates, {
-        new: true
-    }, (err, user) => {
-        if (err) {
-            next(err);
-        } else {
-            if (!user) {
-                res.status(401).json({
-                    message: "Error, no user found"
-                });
-            } else {
-                console.log(`user updated::::::::::::::::::::::-->${user}`);
-                //Only send relevant info. 
-                let address = {
-                    id: user._id,
-                    username: user.username,
-                    role: user.role,
-                    addressInfo: {
-                        flatNumber: user.addressInfo.flatNumber,
-                        floor: user.addressInfo.floor,
-                        streetName: user.addressInfo.streetName,
-                        streetNumber: user.addressInfo.streetNumber,
-                        townName: user.addressInfo.townName,
-                        country: user.addressInfo.country
-                    }
-                };
-
-                console.log(`ACCOUNT-:::::::::->${util.inspect(address)}`);
-
-                res.status(200).json({
-                    message: "user address updated",
-                    user: address
-                });
-            }
-        }
-    });
-});
-
-
-
-/**
- * VIEW USER PAYMENT
- */
-router.post('/account/address', (req, res, next) => {
-
-    console.log(`REQ-:::::::::->${util.inspect(req.body)}`);
-    let username = req.body.username;
-    console.log(`username:${username}`);
-
-    User.findOne({
-        "username": username
-    }, (err, user) => {
-
-        console.log(`user-->${user}`);
-        if (!user) {
-            res.status(401).json({
-                message: "Error, no user found"
-            });
-        } else {
-            console.log('user', user);
-
-            //Only send relevant info. 
-            let account = {
-                id: user._id,
-                username: user.username,
-                role: user.role,
-                addressInfo: {
-                    flatNumber: user.addressInfo.flatNumber,
-                    floor: user.addressInfo.floor,
-                    streetName: user.addressInfo.streetName,
-                    streetNumber: user.addressInfo.streetNumber,
-                    townName: user.addressInfo.townName,
-                    country: user.addressInfo.country
-                }
-            };
-            res.status(200).json({
-                message: "user info",
-                user: account
-            });
-        }
-    })
-});
-
 /**
  * UPDATE USER ADDRESS
  * 
  * NEXT UPGRADE: more routes --> router.put('/account/address/:id'
  */
 router.put('/account/address', (req, res, next) => {
-    console.log(`REQ-:::::::::->${util.inspect(req.body)}`);
+    console.log(`REQ: account/address-:::::::::->${util.inspect(req.body)}`);
     let username = req.body.username;
 
     let updates = {
         addressInfo: {
-            flatNumber: req.body.addressInfo.flatNumber,
-            floor: req.body.addressInfo.floor,
             streetName: req.body.addressInfo.streetName,
             streetNumber: req.body.addressInfo.streetNumber,
+            floor: req.body.addressInfo.floor,
+            stairs: req.body.addressInfo.stairs,
+            postalCode: req.body.addressInfo.postalCode,
+            provinceName: req.body.addressInfo.provinceName,
             townName: req.body.addressInfo.townName,
-            country: req.body.addressInfo.country,
+            country: req.body.addressInfo.country
         }
     }
 
-    console.log(`UPDATES-:::::::::->${util.inspect(updates)}`);
+    console.log(`UPDATES account/address-:::::::::->${util.inspect(updates)}`);
 
     User.findOneAndUpdate(username, updates, {
         new: true
@@ -376,16 +263,18 @@ router.put('/account/address', (req, res, next) => {
                     username: user.username,
                     role: user.role,
                     addressInfo: {
-                        flatNumber: user.addressInfo.flatNumber,
-                        floor: user.addressInfo.floor,
                         streetName: user.addressInfo.streetName,
                         streetNumber: user.addressInfo.streetNumber,
+                        floor: user.addressInfo.floor,
+                        stairs: user.addressInfo.stairs,
+                        postalCode: user.addressInfo.postalCode,
+                        provinceName: user.addressInfo.provinceName,
                         townName: user.addressInfo.townName,
                         country: user.addressInfo.country
                     }
                 };
 
-                console.log(`ACCOUNT-:::::::::->${util.inspect(address)}`);
+                console.log(`RES: put('/account/address address-:::::::::->${util.inspect(address)}`);
 
                 res.status(200).json({
                     message: "user address updated",

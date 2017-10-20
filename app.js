@@ -58,7 +58,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', auth);
 app.use('/', user);
 app.use('/api', passport.authenticate('jwt', { session: false }), phones);
-// app.use('/api', phones);
+/* app.use('/', passport.authenticate('jwt', { session: false }), user); //protected JWT
+ */// app.use('/api', phones);
 
 app.use(function(req, res) {
   res.sendfile(__dirname + '/public/index.html');
