@@ -29,7 +29,7 @@ const userSchema = new Schema({
 
     designerInfo: {
       designs: [{ type: Schema.Types.ObjectId, ref: 'Design' }],
-      contactMail: { type: String, required: true, unique: true },
+      contactMail: { type: String, unique: true },
       website: String,
       description: String,
       socialMedia: { twitter: String, facebook: String, linkedin: String, instagram: String, behance: String, pinterest: String }

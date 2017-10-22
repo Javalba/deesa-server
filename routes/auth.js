@@ -45,40 +45,28 @@ router.post("/login", function(req, res) {
   })
 });
 
+
+
+
 router.get("/token", passport.authenticate('jwt', { session: false }), (req, res, next) => {
 	res.json({ok:'ok'});
 })
 
+
+
+
 router.post("/signup", (req, res, next) => {
 
-// Destructure the body
-    let { username, password, email,avatarUrl,googleId,facebookID,role,shoppingCart} = req.body;
-    
-    let { name, surname, birthday, nif, language,
-         sex, phone1, phone2, profession, clientNum,
-         phoneState, mailState
-        } = req.body.userInfo;
+  let password = req.body.password;
+  let username = req.body.username;
 
-    let { block, extraAddress, flatNumber, floor, postalCode,
-         provinceCode, provinceName, stairs, streetCode, streetName,
-         streetNumber, townCode, townName, country
-        } = req.body.addressInfo;
-    
-    let { method,creditCard}  = req.body.paymentInfo;
-    
-    let { designs,contactMail,website,description,
-          socialMedia: {
-            twitter,facebook,linkedin,instagram
-          }
-        } = req.body.designerInfo;
-
-    //console.log(`streetName ${streetName}`);
+  //console.log(`streetName ${streetName}`);
   if (!username || !password) {
     res.status(400).json({ message: "Provide username and password" });
     return;
   }
 
-  User.findOne({ username }, "username", (err, user) => {
+  User.findOne({ username:username }, "username", (err, user) => {
     if (user !== null) {
       res.status(400).json({ message: 'user exist' });
       return;
@@ -87,30 +75,15 @@ router.post("/signup", (req, res, next) => {
     var salt     = bcrypt.genSaltSync(bcryptSalt);
     var hashPass = bcrypt.hashSync(password, salt);
 
-    var newUser = User({
-      username,
+    var newUser = new User({
+      username: username,
       password: hashPass,
-      email,
+      email: req.body.email,
       userInfo: {
-        name, surname, birthday, nif, language,
-        sex, phone1, phone2, profession, clientNum,
-        phoneState, mailState
+        name: req.body.name, 
+        surname: req.body.surname
       },
-      addressInfo:{
-        block, extraAddress, flatNumber, floor, postalCode,
-        provinceCode, provinceName, stairs, streetCode, streetName,
-        streetNumber, townCode, townName, country
-      },
-      avatarUrl,googleId,facebookID,role,
-      paymentInfo:{
-        method,creditCard
-      },
-      designerInfo:{
-        contactMail,website,description,
-        socialMedia: {
-          twitter,facebook,linkedin,instagram
-        }
-      }
+      role: req.body.role
     });
 
     console.log(`newUser--> ${newUser}`);
