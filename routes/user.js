@@ -56,8 +56,16 @@ router.post('/account', (req, res, next) => {
     let username = {
         "username": req.body.username
     }
+    /* User.findOne(username, (err, user) => { */
 
-    User.findOne(username, (err, user) => {
+    User.findOne(username)
+/*             .populate({
+                path: 'designerInfo',
+                select: 'designs',
+            }
+            ) */
+            .populate('designerInfo.designs')
+            .exec((err, user) => { 
 
         //console.log(`user-->${user}`);
         if (!user) {
@@ -66,7 +74,7 @@ router.post('/account', (req, res, next) => {
             });
         } else {
             //Only send relevant info. 
-            let account = {
+/*             let account = {
                 id: user._id,
                 username: user.username,
                 email: user.email,
@@ -98,14 +106,12 @@ router.post('/account', (req, res, next) => {
                     townCode:user.addressInfo.townCode ,
                     townName:user.addressInfo.townName ,
                     country:user.addressInfo.country 
-                }
-            };
+                },
 
-      console.log(`ACCOUNT-:::::::::->${util.inspect(account)}`); 
-            res.status(200).json({
-                message: "user info",
-                user: account
-            });
+            }; */
+
+      console.log(`USER-:::::::::->${util.inspect(user)}`); 
+            res.status(200).json({ message: "user info", user});
         }
     })
 });

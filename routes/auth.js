@@ -91,11 +91,11 @@ router.post("/signup", (req, res, next) => {
 
     newUser.save((err, user) => {
       if (err) {
-        res.status(400).json({ message: err });
+        return res.status(400).json({ message: err });
       } else {
         var payload = {id: user._id, user: user.username};
         var token = jwt.sign(payload, jwtOptions.secretOrKey);
-        res.status(200).json({message: "ok", token: token, user: user});
+       return res.status(200).json({message: "ok", token: token, user: user});
       	// res.status(200).json(user);
       }
     });
