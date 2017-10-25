@@ -24,8 +24,6 @@ router.get('/', function(req, res, next) {
  * CREATE A NEW DESIGN
  */
 router.post('/new', function(req, res, next) {
-    let flag = false;
-    var flag2 = true; //bool
     console.log(`DESIGNS NEW `);
     console.log('body', req.body);
   
@@ -52,9 +50,7 @@ newDesign.save(function (err) {
                 } else {
 
                     if (user.role !== 'DESIGNER') {
-                        flag = true;
-                        console.log(`User.findID flag--> ${flag}`);
-                        return res.status(401).json({
+                        res.status(401).json({
                             message: "DESIGNER ROLE REQUIRED",
                         });
                     } else {
@@ -78,20 +74,23 @@ newDesign.save(function (err) {
 
                 }
             });
-            console.log(`newDesign.save flag--> ${flag}`);
-            if (flag) {
-                console.log(`flag is true`);
-                return next(err);
-            }
-            else{
-                console.log(`flag is false`);
-            }
-
-            if(flag2){console.log(`flag2 is true`);}else{console.log(`flag2 is false`);}
-
     }
 })
 })
+
+
+router.get('/allDesigns', function(req, res, next) {
+    
+        console.log(`[SERVER] LLEGA ALLDESIGNS`);
+        
+          Design.find({}, function(err, designList) {
+            if( err) {
+              res.json(err)
+            } else {
+              res.status(200).json(designList);
+            }
+          })
+        });
 
 /**
  * VIEW A DESIGN
@@ -107,11 +106,12 @@ router.get('/:id', (req, res, next) => {
          console.log(`ID-:::::::::->${util.inspect(idDesign)}`);
 
          //POPULATE CREATOR?
-/*             Design.findById(idDesign)
-            .populate('creator')
-            .exec((err, design) => { */
+            Design.findById(idDesign)
+/*             .populate('creator')
+ */            .populate({ path: 'creator', select: 'username avatarUrl' })
+               .exec((err, design) => {
 
-    Design.findById(idDesign, (err, design) => {
+/*     Design.findById(idDesign, (err, design) => { */
                 if (!design) {
                     res.status(401).json({
                         message: "Error, no design founssd"
@@ -193,5 +193,7 @@ router.delete('/:id', function(req, res, next) {
   });
 
 })
+
+
 
 module.exports = router;
