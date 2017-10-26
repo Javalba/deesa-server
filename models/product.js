@@ -6,10 +6,10 @@ const Schema = mongoose.Schema;
 
 var commentSchema = new mongoose.Schema({
 
-  productType: { type: String, enum: global.PRODUCTS },
+  productType: { type: String, enum: global.PRODUCTS, required: true },
   design: { type: Schema.Types.ObjectId, ref: 'Design', required: true },
   text: {type: String},
-  size: { type: String, enum: global.SIZES, default: 'No' },
+  //size: { type: String, enum: global.SIZES, default: 'No' },
   
 },
 { timestamps: true });

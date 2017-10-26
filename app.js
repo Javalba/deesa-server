@@ -14,6 +14,7 @@ const auth = require('./routes/auth');
 const user = require('./routes/user');
 const design = require('./routes/designs');
 const comment = require('./routes/comments');
+const product = require('./routes/products');
 
 
 require("dotenv").config();
@@ -62,6 +63,8 @@ app.use('/', auth);
 app.use('/', user);
 app.use('/designs', design);
 app.use('/api/v1/comments', comment);
+app.use('/api/v1/products', product);
+
 //app.use('/api', passport.authenticate('jwt', { session: false }), phones);
 
 
