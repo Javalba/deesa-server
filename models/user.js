@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const global = require('../global');
 const Design = require('./design');
 const Product = require('./product');
+const Comment = require('./comment');
+
 
 const Schema = mongoose.Schema;
 
@@ -32,7 +34,8 @@ const userSchema = new Schema({
       contactMail: { type: String, unique: true },
       website: String,
       description: String,
-      socialMedia: { twitter: String, facebook: String, linkedin: String, instagram: String, behance: String, pinterest: String }
+      socialMedia: { twitter: String, facebook: String, linkedin: String, instagram: String, behance: String, pinterest: String },
+      comments: [{ type: Schema.Types.ObjectId, ref: 'Comment'}]
     }
   }, {timestamps: true}
 );

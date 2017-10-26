@@ -13,6 +13,8 @@ const phones = require('./routes/phones');
 const auth = require('./routes/auth');
 const user = require('./routes/user');
 const design = require('./routes/designs');
+const comment = require('./routes/comments');
+
 
 require("dotenv").config();
 
@@ -58,8 +60,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/', index);
 app.use('/', auth);
 app.use('/', user);
-app.use('/api', passport.authenticate('jwt', { session: false }), phones);
 app.use('/designs', design);
+app.use('/api/v1/comments', comment);
+//app.use('/api', passport.authenticate('jwt', { session: false }), phones);
+
 
 /* app.use('/', passport.authenticate('jwt', { session: false }), user); //protected JWT
  */// app.use('/api', phones);
