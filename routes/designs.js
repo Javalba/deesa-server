@@ -23,59 +23,35 @@ router.get('/', function(req, res, next) {
 /**
  * CREATE A NEW DESIGN
  */
-router.post('/new', function(req, res, next) {
-    console.log(`DESIGNS NEW `);
-    console.log('body', req.body);
-  
-  let newDesign = new Design( {
-    creator: req.body.creator, //id
-    title: req.body.title,
-    designMainImg: req.body.designMainImg, //toDo: multer image
-    designGallery: req.body.designGallery, //array of images
-    description: req.body.description,
-    //image: `/uploads/${req.file.filename}` || ''
-  } )
+router.post('/new', function (req, res, next) {
+    /*     console.log(`DESIGNS NEW `);
+        console.log('body', req.body); */
 
-newDesign.save(function (err) {
-    if (err) {
-        res.json(err);
-    } else {
-        //INSERT DESIGN INTO DESIGNER
-        User
-            .findById(req.body.creator)
-            .populate('designerInfo.designs')
-            .exec((err, user) => {
-                if (err) {
-                    return next(err);
-                } else {
+    let newDesign = Design({
+        creator: req.body.creator, //id
+        title: req.body.title,
+        designMainImg: req.body.designMainImg, //toDo: multer image
+        designGallery: req.body.designGallery, //array of images
+        description: req.body.description,
+        //image: `/uploads/${req.file.filename}` || ''
+    });
 
-                    if (user.role !== 'DESIGNER') {
-                        res.status(401).json({
-                            message: "DESIGNER ROLE REQUIRED",
-                        });
-                    } else {
-                        console.log(`user  before ----------------> ${user.designerInfo.designs}`);
-                        user.designerInfo.designs.push(newDesign._id);
-                        /*             console.log("newFigure--->: " + JSON.stringify(newFigure, null, 4));
-                        */
-                        user.save((err) => {
-                            if (err) {
-                                return next(err);
-                            } else {
-                                console.log(`user  after update ----------------> ${user.designerInfo.designs}`);
+    /*   Thing.pre('save', function(next){
+        console.log("saving: %s (%s)", this.title, this.content)
+        next()
+      }) */
 
-                                res.json({
-                                    message: "design created & disign inserted",
-                                    design: newDesign
-                                });
-                            }
-                        });
-                    }
 
-                }
+    newDesign.save(function (err) {
+        if (err) {
+            return res.json(err.message);
+        } else {
+            return res.json({
+                message: "design created & disign inserted",
+                design: newDesign
             });
-    }
-})
+        }
+    })
 })
 
 

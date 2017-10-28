@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const global = require('../global');
-const Design = require('./design');
+/* const Design = require('./design');
 const Product = require('./product');
-const Comment = require('./comment');
+const Comment = require('./comment'); */
 
 
 const Schema = mongoose.Schema;
