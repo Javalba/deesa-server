@@ -34,9 +34,9 @@ const userSchema = new Schema({
       contactMail: { type: String, unique: true },
       website: String,
       description: String,
-      socialMedia: { twitter: String, facebook: String, linkedin: String, instagram: String, behance: String, pinterest: String },
-      comments: [{ type: Schema.Types.ObjectId, ref: 'Comment'}]
-    }
+      socialMedia: { twitter: String, facebook: String, linkedin: String, instagram: String, behance: String, pinterest: String }
+    },
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment'}]
   }, {timestamps: true}
 );
 
