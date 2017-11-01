@@ -45,15 +45,16 @@ router.post('/new', function (req, res, next) {
 
 
  /**
-  * Retrieve a list of comments by an id design
+  * RETRIEVE A LIST OF COMMENTS BY DESIGN
   */
  router.get('/design/:id', (req, res, next) => {
 
      let idDesign = req.params.id;
      console.log(`ID-:::::::::->${util.inspect(idDesign)}`);
 
+     //double populate: retrieve username & avatar of people who comment in this design
      Design.findById(idDesign)
-         .populate('comments')
+         .populate({path: 'comments', populate: {path: 'creator', select: 'username avatarUrl' }})
          .exec((err, design) => {
 
              if (!design) {
