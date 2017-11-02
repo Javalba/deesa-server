@@ -411,6 +411,32 @@ router.put('/account/designer', (req, res, next) => {
     });
 });
 
+  /**
+  * Retrieve a list of designs of an user
+  */
+  router.get('/account/designs/:idUser', (req, res, next) => {
+    
+            let idUser = req.params.idUser;
+            console.log(`ID-:::::::::->${util.inspect(idUser)}`);
+
+            User.findById(idUser)
+                        .populate('designerInfo.designs')
+                        .exec((err, user) => { 
+
+                        console.log(user);
+        
+                        if (!user) {
+                            res.status(401).json({
+                                message: "Error, user found!"
+                            });
+                        } else {
+                            res.status(200).json({
+                                message: "designs",
+                                designs: user.designerInfo.designs
+                            });
+                        }
+                    })
+        });
 
 
 router.get('/phones/:id', function (req, res, next) {
