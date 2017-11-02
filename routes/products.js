@@ -13,13 +13,30 @@ router.get('/allProductTypes', (req, res, next) => {
 
     let products = global.PRODUCTS;
 
-
     res.status(200).json({
         message: "products in shopping cart",
         products: products
     });
 });
 
+//SEARCH PRODUCT BY NAME
+router.get('/productType/:name', (req, res, next) => {
+    
+        let products = global.PRODUCTS;
+        let name = req.params.name;
+
+        products.forEach((element)=>{
+            if(element.name === name){
+                return res.status(200).json({
+                    product: element
+                }); 
+            }
+        });
+
+        return res.status(200).json({
+            message: "no product finded",
+        });
+    });
 
 /**
  * CREATE A NEW PRODUCT
@@ -74,7 +91,7 @@ router.post('/new', function(req, res, next) {
                     })
         });
 
-         /**
+  /**
   * Retrieve a list of products in orders by id design 
   */
   router.get('/orders/:idUser', (req, res, next) => {

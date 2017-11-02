@@ -3,24 +3,31 @@ const COUNTRIES = ["Afghanistan", "Albania", "Algeria", "American Samoa", "Andor
 const ROLES = ['FAN', 'DESIGNER', 'ADMIN'];
 const SIZE = ['S', 'M', 'L'];
 const PRODUCTS = [{
-    name: 'SHIRT',
+    name: 'CAMISETA',
     price: 15,
-    images: ['images/shirt1.png','images/shirt2.png'],
-    description: 'tshirt desc',
+    images: ['https://i.stack.imgur.com/tINcy.png','images/shirt2.png'],
+    description: 'La mejor camiseta!',
     size: ['S', 'M', 'L']
 }, {
-    name: 'MUG',
+    name: 'TAZA',
     price: 10,
-    images: ['images/mug1.png','images/mug2.png'],
-    description: 'mug desc'
+    images: ['https://images-na.ssl-images-amazon.com/images/I/31TS4nZ8QFL._SY355_.jpg','images/mug2.png'],
+    description: 'La mejor taza!'
     
 }, {
-    name: 'HOODIE',
+    name: 'SUDADERA',
     price: 20,
-    images: ['images/hoodie1.png','images/hoodie2.png'],
-    description: 'hoodie desc',
+    images: ['http://teetalkies.com/wp-content/uploads/2016/12/White-Hoodie-Front-819x1024.png','images/hoodie2.png'],
+    description: 'La mejor sudadera!',
     size: ['S', 'M', 'L']
-}];
+}, {
+    name: 'MOCHILA',
+    price: 20,
+    images: ['http://static.cloud-boxloja.com/lojas/2jbpt/produtos/1543a9d4-7f42-4589-a8d0-fe9f351203ce.png','images/hoodie2.png'],
+    description: 'La mejor mochila!'
+}
+
+];
 
 module.exports.COUNTRIES = COUNTRIES;
 module.exports.ROLES = ROLES;
