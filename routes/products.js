@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 
 const Design = require('../models/design');
+const Product = require('../models/product');
 const User = require('../models/user');
 
 const upload = require('../config/multer');
@@ -42,21 +43,21 @@ router.get('/productType/:name', (req, res, next) => {
  * CREATE A NEW PRODUCT
  */
 router.post('/new', function(req, res, next) {
-    console.log(`PRODUCT NEW `);
-    console.log('body', req.body);
   
   let newProduct = new Product( {
-    product: req.body.product,
+    productType: req.body.productType,
     design: req.body.design,
     text: req.body.text, 
-  } )
+    qty: req.body.qty,
+    size:req.body.size
+  });
 
   newProduct.save((err, product) => {
     if (err) {
       return res.status(400).json({ message: err });
     } else {
         res.status(200).json({
-            message: "product created",
+            message: "Added product to cart!",
             product: product
         });
     }

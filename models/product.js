@@ -6,12 +6,21 @@ const Schema = mongoose.Schema;
 
 var commentSchema = new mongoose.Schema({
 
-  productType: { type: String, enum: global.PRODUCTS, required: true },
+/*   productType: [{ type: String, enum: global.PRODUCTS, required: true }],
   design: { type: Schema.Types.ObjectId, ref: 'Design', required: true },
   text: {type: String},
-  qty: {type:Number}
-  //size: { type: String, enum: global.SIZES, default: 'No' },
-  
+  qty: {type:Number},
+  size: {type: String} */
+  productType: {
+    name: String,
+    price: Number,
+    images: [String],
+    description: String
+  },
+  design: { type: Schema.Types.ObjectId, ref: 'Design', required: true },
+  text: String,
+  qty: {type:Number, min: 1},
+  size: {type: String}
 },
 { timestamps: true });
 
