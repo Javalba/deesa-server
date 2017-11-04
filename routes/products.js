@@ -65,6 +65,41 @@ router.post('/new', function(req, res, next) {
   });
 })
 
+/**
+ * DELETE A PRODUCT AND REFERENCE
+ */
+router.delete('/:id', function(req, res, next) {
+    
+      let idProduct = req.params.id;
+      
+      Product.findById(idProduct, (err, product) => {
+          console.log(product);
+          if (err) {
+              return next(err);
+          } else {
+              if(product){
+                let idCreator = product.creator;
+                User.update({ _id: idCreator }, { "$pull": { "shoppingCart": idProduct} }, { safe: true }, (err, elem) => {
+                  if (err){ return next(err);} 
+                    Product.findByIdAndRemove(idProduct, (err, product) => {
+                        if (err) {
+                            return next(err);
+                        }
+                        return res.json({
+                            message: "product & id product shopping reference user deleted"
+                        });
+                    });
+                });
+              }
+              else{
+                  return next(new Error("User not found"));
+                }
+
+          }
+      });
+    
+    })
+
 
 
 
