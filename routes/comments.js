@@ -16,14 +16,17 @@ const assert = require('assert');
  * Si todas las variables son true entonces hacer el save y los updates.
  */
 router.post('/new', function (req, res, next) {
-    console.log(`COMMENT NEW `);
+    console.log(`COMMENT NEW::::::::::::::::::::::::::::::::::::::::::&&&:&::&: `);
     console.log('body', req.body);
 
     let newComment = new Comment({
-        creator: req.body.creator, //id
+        creator: req.body.creator._id, //id
         design: req.body.design,
         message: req.body.message,
     });
+
+    console.log('newComment------------------------------->');
+    console.log(newComment);
 
     //Save new comment
     newComment.save(function (err) {
