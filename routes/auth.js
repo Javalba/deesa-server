@@ -75,15 +75,37 @@ router.post("/signup", (req, res, next) => {
     var salt     = bcrypt.genSaltSync(bcryptSalt);
     var hashPass = bcrypt.hashSync(password, salt);
 
-    var newUser = new User({
-      username: username,
-      password: hashPass,
-      email: req.body.email,
-      userInfo: {
-        name: req.body.name, 
-        surname: req.body.surname
-      },
-      role: req.body.role
+var newUser = new User({
+    username: username,
+    email: req.body.email,
+    password: hashPass,
+    userInfo: {
+       name: req.body.name, surname: req.body.surname, birthday: "", nif: "", language: "",
+       sex: "",  phone1: "", phone2: "", profession: "", clientNum: "",
+       phoneState: "", mailState: ""
+    },
+    addressInfo: {
+      block: "", extraAddress: "", flatNumber: "", floor: "", postalCode: "",
+      provinceCode: "", provinceName: "", stairs:"", streetCode: "", streetName: "",
+      streetNumber: "", townCode: "", townName: "", country: ""
+    },
+    avatarUrl: "assets/images/avatar-default.jpg",
+    googleID: "",
+    facebookID: "",
+    role: req.body.role,
+    paymentInfo: {},
+    shoppingCart: [],
+    orders: [],
+
+    designerInfo: {
+      designs: [],
+      contactMail: req.body.email,
+      website: "",
+      description: "",
+      socialMedia: { 
+        twitter: "", facebook: "", linkedin: "", instagram: "", behance: "", pinterest: "" },
+      comments: []
+      }
     });
 
     console.log(`newUser--> ${newUser}`);

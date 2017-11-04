@@ -1,14 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const aws       = require('aws-sdk');
+const multerS3  = require('multer-s3');
 
 const User = require('../models/user');
 
 const upload = require('../config/multer');
 const util = require('util');
+const path = require('path');
 
 // Bcrypt let us encrypt passwords
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
+
+let s3 = new aws.S3();
 
 router.get('/:username', (req, res, next) => {
     /**
@@ -467,55 +472,29 @@ router.put('/account/designer', (req, res, next) => {
 
 
 
+///// NEW ///
 
-router.get('/phones/:id', function (req, res, next) {
+router.post('/avatar', upload.uploadAvatar.single('file'), (req, res, next) => {
 
-    var id = req.params.id
+  let oldImg = req.body.old_imgUrl;
+  let imgToDelete = path.basename(req.body.old_imgUrl);
 
-    Phone.findById(id, function (err, phone) {
-        if (err) {
-            res.json(err)
-        } else {
-            res.json(phone)
-        }
-    })
-})
+  let newImg = `https://s3.eu-central-1.amazonaws.com/deesa/avatars/${req.file.key}`;
 
-router.put('/phones/:id', function (req, res, next) {
-    var id = req.params.id;
-    var phoneToUpdate = {
-        brand: req.body.brand,
-        model: req.body.model,
-        specs: req.body.specs,
-        image: req.body.image || ''
-    }
+   User.findByIdAndUpdate(req.body._id, {$set:{avatarUrl:newImg}}, {new: true}, 
+   (err, user) => {
+    if (err){ return next(err);} 
+      s3.deleteObject({
+      Bucket: 'deesa',
+      Key: `avatars/${imgToDelete}`
+    },function (err,data){})
+    
+        return res.json({
+        message: 'Image successfully updated!'
+        });
+    });
+  });  
 
-    Phone.findByIdAndUpdate(id, phoneToUpdate, function (err) {
-        if (err) {
-            res.json(err)
-        } else {
-            res.json({
-                message: "updated"
-            })
-        }
-    })
-})
-
-router.delete('/phones/:id', function (req, res, next) {
-    var id = req.params.id
-
-    Phone.remove({
-        _id: id
-    }, function (err) {
-        if (err) {
-            res.json(err);
-        } else {
-            res.json({
-                message: "deleted"
-            });
-        }
-    })
-})
 
 
 module.exports = router;
