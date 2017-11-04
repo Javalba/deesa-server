@@ -1,14 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const aws       = require('aws-sdk');
+const multerS3  = require('multer-s3');
 
 const User = require('../models/user');
 
 const upload = require('../config/multer');
 const util = require('util');
+const path = require('path');
 
 // Bcrypt let us encrypt passwords
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
+
+let s3 = new aws.S3();
 
 router.get('/:username', (req, res, next) => {
     /**
@@ -469,10 +474,11 @@ router.put('/account/designer', (req, res, next) => {
 
 ///// NEW ///
 
-router.post('/account/avatar', upload.uploadAvatar.single('imgUrl'), (req, res, next) => {
+router.post('/avatar', upload.uploadAvatar.single('file'), (req, res, next) => {
 
   let oldImg = req.body.old_imgUrl;
   let imgToDelete = path.basename(req.body.old_imgUrl);
+
   let newImg = `https://s3.eu-central-1.amazonaws.com/deesa/avatars/${req.file.key}`;
 
    User.findByIdAndUpdate(req.body._id, {$set:{avatarUrl:newImg}}, {new: true}, 
