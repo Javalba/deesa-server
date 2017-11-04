@@ -9,7 +9,6 @@ const passport   = require('./config/passport');
 const cors = require('cors')();
 
 const index = require('./routes/index');
-const phones = require('./routes/phones');
 const auth = require('./routes/auth');
 const user = require('./routes/user');
 const design = require('./routes/designs');

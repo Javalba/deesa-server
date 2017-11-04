@@ -412,55 +412,28 @@ router.put('/account/designer', (req, res, next) => {
 });
 
 
+///// NEW ///
 
-router.get('/phones/:id', function (req, res, next) {
+router.post('/account/avatar', upload.uploadAvatar.single('imgUrl'), (req, res, next) => {
 
-    var id = req.params.id
+  let oldImg = req.body.old_imgUrl;
+  let imgToDelete = path.basename(req.body.old_imgUrl);
+  let newImg = `https://s3.eu-central-1.amazonaws.com/deesa/avatars/${req.file.key}`;
 
-    Phone.findById(id, function (err, phone) {
-        if (err) {
-            res.json(err)
-        } else {
-            res.json(phone)
-        }
-    })
-})
+   User.findByIdAndUpdate(req.body._id, {$set:{avatarUrl:newImg}}, {new: true}, 
+   (err, user) => {
+    if (err){ return next(err);} 
+      s3.deleteObject({
+      Bucket: 'deesa',
+      Key: `avatars/${imgToDelete}`
+    },function (err,data){})
+    
+        return res.json({
+        message: 'Image successfully updated!'
+        });
+    });
+  });  
 
-router.put('/phones/:id', function (req, res, next) {
-    var id = req.params.id;
-    var phoneToUpdate = {
-        brand: req.body.brand,
-        model: req.body.model,
-        specs: req.body.specs,
-        image: req.body.image || ''
-    }
-
-    Phone.findByIdAndUpdate(id, phoneToUpdate, function (err) {
-        if (err) {
-            res.json(err)
-        } else {
-            res.json({
-                message: "updated"
-            })
-        }
-    })
-})
-
-router.delete('/phones/:id', function (req, res, next) {
-    var id = req.params.id
-
-    Phone.remove({
-        _id: id
-    }, function (err) {
-        if (err) {
-            res.json(err);
-        } else {
-            res.json({
-                message: "deleted"
-            });
-        }
-    })
-})
 
 
 module.exports = router;
