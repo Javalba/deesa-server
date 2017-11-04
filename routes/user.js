@@ -439,6 +439,35 @@ router.put('/account/designer', (req, res, next) => {
         });
 
 
+          /**
+  * Retrieve shopping cart
+  */
+  router.get('/account/cart/:idUser', (req, res, next) => {
+    
+            let idUser = req.params.idUser;
+            console.log(`ID-:::::::::->${util.inspect(idUser)}`);
+
+            User.findById(idUser)
+                        .populate('shoppingCart')
+                        .exec((err, user) => { 
+        
+                        if (!user) {
+                            res.status(401).json({
+                                message: "Error, user found!"
+                            });
+                        } else {
+                            res.status(200).json({
+                                message: "cart",
+                                products: user.shoppingCart
+                            });
+                        }
+                    })
+        });
+
+
+
+
+
 router.get('/phones/:id', function (req, res, next) {
 
     var id = req.params.id

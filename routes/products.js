@@ -45,6 +45,7 @@ router.get('/productType/:name', (req, res, next) => {
 router.post('/new', function(req, res, next) {
   
   let newProduct = new Product( {
+    creator: req.body.creator,  
     productType: req.body.productType,
     design: req.body.design,
     text: req.body.text, 
