@@ -6,6 +6,7 @@ const User = require('../models/user');
 
 const upload = require('../config/multer');
 const util = require('util');
+const path = require('path');
 
 /* GET users listing. */
 
@@ -23,17 +24,19 @@ router.get('/', function(req, res, next) {
 /**
  * CREATE A NEW DESIGN
  */
-router.post('/new', function (req, res, next) {
+router.post('/new', upload.uploadDesign.single('file'),  function (req, res, next) {
+
     /*     console.log(`DESIGNS NEW `);
         console.log('body', req.body); */
+
+    designImg = `https://s3.eu-central-1.amazonaws.com/deesa/designs/${req.file.key}`;
 
     let newDesign = Design({
         creator: req.body.creator, //id
         title: req.body.title,
-        designMainImg: req.body.designMainImg, //toDo: multer image
-        designGallery: req.body.designGallery, //array of images
+        designMainImg: designImg, //toDo: multer image
+        designGallery: req.body.designGallery || [], //array of images
         description: req.body.description,
-        //image: `/uploads/${req.file.filename}` || ''
     });
 
     /*   Thing.pre('save', function(next){
@@ -125,7 +128,6 @@ router.put('/:id', function(req, res, next) {
     let idDesign = req.params.id;
     let designToUpdate = {
         title: req.body.title,
-        designMainImg: req.body.designMainImg,
         designGallery: req.body.designGallery, // array of images, not only one.
         description: req.body.description,
       }
@@ -167,8 +169,35 @@ router.delete('/:id', function(req, res, next) {
           });
       }
   });
-
 })
+
+
+
+
+///// Esto se usara para el edit d eun design. Será una llamada directa a esta ruta para cambiar la imagen ///
+
+router.post('/design-image', upload.uploadAvatar.single('file'), (req, res, next) => {
+
+  let oldImg = req.body.old_imgUrl;
+  let imgToDelete = path.basename(req.body.old_imgUrl);
+
+  console.log(imgToDelete + "/////////////////// **************")
+
+  let newImg = `https://s3.eu-central-1.amazonaws.com/deesa/designs/${req.file.key}`;
+
+   User.findByIdAndUpdate(req.body._id, {$set:{designMainImg:newImg}}, {new: true}, 
+   (err, user) => {
+    if (err){ return next(err);} 
+      s3.deleteObject({
+      Bucket: 'deesa',
+      Key: `designs/${imgToDelete}`
+    },function (err,data){})
+    
+        return res.json({
+        message: 'Image successfully updated!'
+        });
+    });
+  });  
 
 
 

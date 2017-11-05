@@ -479,6 +479,8 @@ router.post('/avatar', upload.uploadAvatar.single('file'), (req, res, next) => {
   let oldImg = req.body.old_imgUrl;
   let imgToDelete = path.basename(req.body.old_imgUrl);
 
+  console.log(imgToDelete + "/////////////////// **************")
+
   let newImg = `https://s3.eu-central-1.amazonaws.com/deesa/avatars/${req.file.key}`;
 
    User.findByIdAndUpdate(req.body._id, {$set:{avatarUrl:newImg}}, {new: true}, 
