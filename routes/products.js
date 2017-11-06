@@ -86,7 +86,7 @@ router.delete('/:id', function(req, res, next) {
                             return next(err);
                         }
                         return res.json({
-                            message: "product & id product shopping reference user deleted"
+                            message: "Producto eliminado"
                         });
                     });
                 });
