@@ -21,12 +21,14 @@ const cors = require('cors')({ exposedHeaders: ['X-ResponseTime']});
 require("dotenv").config();
 
 
+mongoose.connect(process.env.MONGODB_URI); //heroku
 
-if ( process.env.NODE_ENV === 'development' ) {
+/* if ( process.env.NODE_ENV === 'development' ) {
 	mongoose.connect(process.env.DATABASE);
 } else {
 	mongoose.connect(process.env.MONGODB_URI); //heroku
 }
+ */
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
