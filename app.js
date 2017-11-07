@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport   = require('./config/passport');
-//const cors = require('cors')();
+const cors = require('cors')();
 
 const index = require('./routes/index');
 const auth = require('./routes/auth');
@@ -14,21 +14,18 @@ const user = require('./routes/user');
 const design = require('./routes/designs');
 const comment = require('./routes/comments');
 const product = require('./routes/products');
-const cors = require('cors')({ exposedHeaders: ['X-ResponseTime']});
+//const cors = require('cors')({ exposedHeaders: ['X-ResponseTime']});
 
 
 
 require("dotenv").config();
 
-
-mongoose.connect(process.env.MONGODB_URI); //heroku
-
-/* if ( process.env.NODE_ENV === 'development' ) {
+if ( process.env.NODE_ENV === 'development' ) {
 	mongoose.connect(process.env.DATABASE);
 } else {
 	mongoose.connect(process.env.MONGODB_URI); //heroku
 }
- */
+
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
