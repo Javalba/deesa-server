@@ -20,11 +20,7 @@ const product = require('./routes/products');
 
 require("dotenv").config();
 
-if ( process.env.NODE_ENV === 'development' ) {
-	mongoose.connect(process.env.DATABASE);
-} else {
-	mongoose.connect(process.env.MONGODB_URI); //heroku
-}
+mongoose.connect(process.env.MONGODB_URI);
 
 
 const db = mongoose.connection;
