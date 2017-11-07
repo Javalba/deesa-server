@@ -57,8 +57,12 @@ router.get("/token", passport.authenticate('jwt', { session: false }), (req, res
 
 router.post("/signup", (req, res, next) => {
 
+  console.log(`SE METE EN EL SIGN UP HEROKU`);
+
   let password = req.body.password;
   let username = req.body.username;
+  console.log(`RECIBO USERNAME`);
+  console.log(username);
 
   //console.log(`streetName ${streetName}`);
   if (!username || !password) {
