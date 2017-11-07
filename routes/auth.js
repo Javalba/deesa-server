@@ -117,6 +117,10 @@ var newUser = new User({
       } else {
         var payload = {id: user._id, user: user.username};
         var token = jwt.sign(payload, jwtOptions.secretOrKey);
+        console.log(`USER FROM SIGNUP`);
+        console.log(user);
+        console.log(`TOKEN`);
+        console.log(token);
        return res.status(200).json({message: "ok", token: token, user: user});
       	// res.status(200).json(user);
       }
