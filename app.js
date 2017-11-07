@@ -69,6 +69,7 @@ app.use('/api/v1/products', product);
  */// app.use('/api', phones);
 
 app.use(function(req, res) {
+  return res.status(209).json({message: 'I´m late!'})
   res.sendfile(__dirname + '/public/index.html');
 });
 // catch 404 and forward to error handler
