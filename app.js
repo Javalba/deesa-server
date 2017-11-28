@@ -25,7 +25,7 @@ mongoose.connect(process.env.MONGODB_URI);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => console.log(`Connected to ${process.env.DATABASE} database`) );
+db.once('open', () => console.log(`Connected to ${process.env.MONGODB_URI} database`) );
 
 const app = express();
 
