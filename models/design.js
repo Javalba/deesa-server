@@ -24,7 +24,9 @@ var designSchema = new Schema({
 { timestamps: true });
 
 
-
+/**
+ * Store design id reference in user designs
+ */
 designSchema.pre('save', function (next) {
   console.log(`SE METE AL PRE SAVE`);
   let newDesignId = this._id;

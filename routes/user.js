@@ -125,6 +125,7 @@ router.post('/account', (req, res, next) => {
  * UPDATE ACCOUNT
  */
 router.put('/account', (req, res, next) => {
+    console.log(`LLEGA A ACCOUNT UPDATE PUT!!!!!!!`);
     console.log(`REQ-:::::::::->${util.inspect(req.body)}`);
     let username = req.body.username;
     console.log(`username-->${username}`);
@@ -144,19 +145,26 @@ router.put('/account', (req, res, next) => {
     
 
     //console.log(`UPDATES-:::::::::->${util.inspect(updates)}`);
-    //DUDA::::: Porque funciona si le paso username sin ser objeto?????
-    User.findOneAndUpdate(username, updates, {
+
+    //ToDo: FIX Profile validation
+    //Separate findOneAndUpdate in two different ways:
+    //FindOne & Update
+
+    User.findOneAndUpdate({ "username" : username }, updates, {
         new: true
     }, (err, user) => {
         if (err) {
+            console.log(err);
             next(err);
         } else {
+            console.log(`::>>>>:::>>:USER FOUND!!`);
+            console.log(user);
             if (!user) {
                 res.status(401).json({
                     message: "Error, no user found"
                 });
             } else {
-                //console.log(`user updated::::::::::::::::::::::-->${user}`);
+                console.log(`user updated::::::::::::::&$%&%$&%$&%$&%$&%$%%&%&F)$F·%$FJ%$J)F%)JF::::::::-->${user}`);
                 //Only send relevant info. 
                 let account = {
                     id: user._id,
@@ -256,10 +264,11 @@ router.put('/account/address', (req, res, next) => {
 
     console.log(`UPDATES account/address-:::::::::->${util.inspect(updates)}`);
 
-    User.findOneAndUpdate(username, updates, {
+    User.findOneAndUpdate({ "username" : username }, updates, {
         new: true
     }, (err, user) => {
         if (err) {
+            console.log(err);
             next(err);
         } else {
             if (!user) {
@@ -296,7 +305,45 @@ router.put('/account/address', (req, res, next) => {
     });
 });
 
+/**
+ * UPDATE USER AVATAR
+ * 
+ * NEXT UPGRADE: more routes --> router.put('/account/address/:id'
+ */
+router.put('/account/avatar', (req, res, next) => {
+    console.log(`REQ: account/avatar-:::::::::->${util.inspect(req.body)}`);
 
+    let username = req.body.username;
+    let updates = {avatarUrl: req.body.avatarUrl}
+
+    console.log(`UPDATE AVATAR --> username::: >${util.inspect(username)}`);
+    console.log(`UPDATE AVATAR --> updates::: >${util.inspect(updates)}`);
+
+     User.findOneAndUpdate({ "username" : username }, updates, {
+        new: true
+    }, (err, user) => {
+        if (err) {
+            console.log(err);
+            next(err);
+        } else {
+            if (!user) {
+                res.status(401).json({
+                    message: "Error, no user found"
+                });
+            } else {
+                console.log(`user updated::::::::::::::::::::::-->${user}`);
+                //Only send relevant info. 
+                let avatarUrl = user.avatarUrl;
+                console.log(`RES: put('avatarUrl:::::::::->${util.inspect(avatarUrl)}`);
+
+                res.status(200).json({
+                    message: "user avatar updated",
+                    avatarUrl: avatarUrl
+                });
+            }
+        }
+    }); 
+});
 
 /**
  * VIEW USER DESIGNER INFO

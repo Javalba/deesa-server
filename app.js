@@ -14,20 +14,18 @@ const user = require('./routes/user');
 const design = require('./routes/designs');
 const comment = require('./routes/comments');
 const product = require('./routes/products');
+//const cors = require('cors')({ exposedHeaders: ['X-ResponseTime']});
+
 
 
 require("dotenv").config();
 
+mongoose.connect(process.env.MONGODB_URI);
 
-if ( process.env.NODE_ENV === 'development' ) {
-	mongoose.connect(process.env.DATABASE);
-} else {
-	mongoose.connect(process.env.DATABASE);
-}
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => console.log(`Connected to ${process.env.DATABASE} database`) );
+db.once('open', () => console.log(`Connected to ${process.env.MONGODB_URI} database`) );
 
 const app = express();
 
@@ -71,6 +69,7 @@ app.use('/api/v1/products', product);
  */// app.use('/api', phones);
 
 app.use(function(req, res) {
+  return res.status(209).json({message: 'I´m late!'})
   res.sendfile(__dirname + '/public/index.html');
 });
 // catch 404 and forward to error handler

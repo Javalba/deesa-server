@@ -21,7 +21,7 @@ const userSchema = new Schema({
       provinceCode: String, provinceName: String, stairs: String, streetCode: String, streetName: String,
       streetNumber: String, townCode: String, townName: String, country: String
     },
-    avatarUrl: { type: String, default: 'assets/images/avatar-default.png', },
+    avatarUrl: { type: String, default: 'assets/images/avatar-default.jpg', },
     googleID: String,
     facebookID: String,
     role: { type: String, enum: global.ROLES, default: 'FAN' },

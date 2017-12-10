@@ -18,33 +18,39 @@ router.get('/', function(req, res, next) {
     } else {
       res.status(200).json(designList);
     }
-  })
+  });
 });
 
 /**
  * CREATE A NEW DESIGN
  */
+<<<<<<< HEAD
 router.post('/new', upload.uploadDesign.single('file'),  function (req, res, next) {
 
     /*     console.log(`DESIGNS NEW `);
         console.log('body', req.body); */
+=======
+router.post('/new', function (req, res, next) {
+         console.log(`DESIGNS NEW `);
+        console.log('body', req.body); 
+>>>>>>> 032fa8df0e1611646c9cc45fc873c9bb3180095c
 
     designImg = `https://s3.eu-central-1.amazonaws.com/deesa/designs/${req.file.key}`;
 
     let newDesign = Design({
-        creator: req.body.creator, //id
+        creator: req.body.creator,
         title: req.body.title,
+<<<<<<< HEAD
         designMainImg: designImg, //toDo: multer image
         designGallery: req.body.designGallery || [], //array of images
+=======
+        designMainImg: req.body.designMainImg,
+        designGallery: req.body.designGallery, //array of images
+>>>>>>> 032fa8df0e1611646c9cc45fc873c9bb3180095c
         description: req.body.description,
     });
 
-    /*   Thing.pre('save', function(next){
-        console.log("saving: %s (%s)", this.title, this.content)
-        next()
-      }) */
-
-
+    //pre save to store design id in "model/design.js" 
     newDesign.save(function (err) {
         if (err) {
             return res.json(err.message);
@@ -171,6 +177,7 @@ router.delete('/:id', function(req, res, next) {
   });
 })
 
+<<<<<<< HEAD
 
 
 
@@ -201,4 +208,6 @@ router.post('/design-image', upload.uploadAvatar.single('file'), (req, res, next
 
 
 
+=======
+>>>>>>> 032fa8df0e1611646c9cc45fc873c9bb3180095c
 module.exports = router;
