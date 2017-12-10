@@ -6,25 +6,25 @@ const PRODUCTS = [{
     name: 'CAMISETA',
     price: 15,
     images: ['https://i.stack.imgur.com/tINcy.png','images/shirt2.png'],
-    description: 'La mejor camiseta!',
+    description: 'Camiseta 100% algodon en diferentes tallas',
     size: ['S', 'M', 'L']
 }, {
     name: 'TAZA',
     price: 10,
     images: ['http://www.ico2017.org/wp-content/uploads/2017/01/mug.png','images/mug2.png'],
-    description: 'La mejor taza!'
+    description: 'Nada como un buen café con estilo'
     
 }, {
     name: 'SUDADERA',
     price: 20,
     images: ['http://teetalkies.com/wp-content/uploads/2016/12/White-Hoodie-Front-819x1024.png','images/hoodie2.png'],
-    description: 'La mejor sudadera!',
+    description: 'Así da gusto abrigarse',
     size: ['S', 'M', 'L']
 }, {
     name: 'MOCHILA',
     price: 20,
     images: ['http://static.cloud-boxloja.com/lojas/2jbpt/produtos/1543a9d4-7f42-4589-a8d0-fe9f351203ce.png','images/hoodie2.png'],
-    description: 'La mejor mochila!'
+    description: 'Luce tus símbolos y diseños favoritos en esta sencilla mochila'
 }
 
 ];
