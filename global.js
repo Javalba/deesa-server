@@ -11,7 +11,7 @@ const PRODUCTS = [{
 }, {
     name: 'TAZA',
     price: 10,
-    images: ['https://images-na.ssl-images-amazon.com/images/I/31TS4nZ8QFL._SY355_.jpg','images/mug2.png'],
+    images: ['http://www.ico2017.org/wp-content/uploads/2017/01/mug.png','images/mug2.png'],
     description: 'La mejor taza!'
     
 }, {

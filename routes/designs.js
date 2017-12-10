@@ -17,31 +17,26 @@ router.get('/', function(req, res, next) {
     } else {
       res.status(200).json(designList);
     }
-  })
+  });
 });
 
 /**
  * CREATE A NEW DESIGN
  */
 router.post('/new', function (req, res, next) {
-    /*     console.log(`DESIGNS NEW `);
-        console.log('body', req.body); */
+         console.log(`DESIGNS NEW `);
+        console.log('body', req.body); 
 
     let newDesign = Design({
-        creator: req.body.creator, //id
+        creator: req.body.creator,
         title: req.body.title,
-        designMainImg: req.body.designMainImg, //toDo: multer image
+        designMainImg: req.body.designMainImg,
         designGallery: req.body.designGallery, //array of images
         description: req.body.description,
         //image: `/uploads/${req.file.filename}` || ''
     });
 
-    /*   Thing.pre('save', function(next){
-        console.log("saving: %s (%s)", this.title, this.content)
-        next()
-      }) */
-
-
+    //pre save to store design id in "model/design.js" 
     newDesign.save(function (err) {
         if (err) {
             return res.json(err.message);
@@ -169,7 +164,5 @@ router.delete('/:id', function(req, res, next) {
   });
 
 })
-
-
 
 module.exports = router;
