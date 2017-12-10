@@ -24,29 +24,17 @@ router.get('/', function(req, res, next) {
 /**
  * CREATE A NEW DESIGN
  */
-<<<<<<< HEAD
-router.post('/new', upload.uploadDesign.single('file'),  function (req, res, next) {
-
-    /*     console.log(`DESIGNS NEW `);
-        console.log('body', req.body); */
-=======
 router.post('/new', function (req, res, next) {
          console.log(`DESIGNS NEW `);
         console.log('body', req.body); 
->>>>>>> 032fa8df0e1611646c9cc45fc873c9bb3180095c
 
     designImg = `https://s3.eu-central-1.amazonaws.com/deesa/designs/${req.file.key}`;
 
     let newDesign = Design({
         creator: req.body.creator,
         title: req.body.title,
-<<<<<<< HEAD
-        designMainImg: designImg, //toDo: multer image
-        designGallery: req.body.designGallery || [], //array of images
-=======
         designMainImg: req.body.designMainImg,
         designGallery: req.body.designGallery, //array of images
->>>>>>> 032fa8df0e1611646c9cc45fc873c9bb3180095c
         description: req.body.description,
     });
 
@@ -177,37 +165,4 @@ router.delete('/:id', function(req, res, next) {
   });
 })
 
-<<<<<<< HEAD
-
-
-
-///// Esto se usara para el edit d eun design. Será una llamada directa a esta ruta para cambiar la imagen ///
-
-router.post('/design-image', upload.uploadAvatar.single('file'), (req, res, next) => {
-
-  let oldImg = req.body.old_imgUrl;
-  let imgToDelete = path.basename(req.body.old_imgUrl);
-
-  console.log(imgToDelete + "/////////////////// **************")
-
-  let newImg = `https://s3.eu-central-1.amazonaws.com/deesa/designs/${req.file.key}`;
-
-   User.findByIdAndUpdate(req.body._id, {$set:{designMainImg:newImg}}, {new: true}, 
-   (err, user) => {
-    if (err){ return next(err);} 
-      s3.deleteObject({
-      Bucket: 'deesa',
-      Key: `designs/${imgToDelete}`
-    },function (err,data){})
-    
-        return res.json({
-        message: 'Image successfully updated!'
-        });
-    });
-  });  
-
-
-
-=======
->>>>>>> 032fa8df0e1611646c9cc45fc873c9bb3180095c
 module.exports = router;
