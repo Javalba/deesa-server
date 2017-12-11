@@ -12,13 +12,13 @@ const PRODUCTS = [{
     name: 'TAZA',
     price: 10,
     images: ['http://www.ico2017.org/wp-content/uploads/2017/01/mug.png','images/mug2.png'],
-    description: 'Nada como un buen café con estilo'
+    description: 'Nada como un buen café con estilo con esta sorprendente taza!'
     
 }, {
     name: 'SUDADERA',
     price: 20,
     images: ['http://teetalkies.com/wp-content/uploads/2016/12/White-Hoodie-Front-819x1024.png','images/hoodie2.png'],
-    description: 'Así da gusto abrigarse',
+    description: 'Con esta sudadera da gusto abrigarse',
     size: ['S', 'M', 'L']
 }, {
     name: 'MOCHILA',
