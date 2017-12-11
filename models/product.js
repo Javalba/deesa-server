@@ -26,7 +26,6 @@ var productSchema = new mongoose.Schema({
 { timestamps: true });
 
 productSchema.pre('save', function (next) {
-  console.log(`SE METE AL PRE SAVE`);
   let newProductId = this._id;
 
   var idCreator = new mongoose.Types.ObjectId(this.creator);

@@ -73,7 +73,6 @@ router.delete('/:id', function(req, res, next) {
       let idProduct = req.params.id;
       
       Product.findById(idProduct, (err, product) => {
-          console.log(product);
           if (err) {
               return next(err);
           } else {
@@ -109,7 +108,6 @@ router.delete('/:id', function(req, res, next) {
   router.get('/shoppingCart/:idUser', (req, res, next) => {
     
             let idUser = req.params.idUser;
-            console.log(`ID-:::::::::->${util.inspect(idUser)}`);
     
                     User.findById(idUser)
                         .populate('shoppingCart')
@@ -134,7 +132,6 @@ router.delete('/:id', function(req, res, next) {
   router.get('/orders/:idUser', (req, res, next) => {
     
             let idUser = req.params.idUser;
-            console.log(`ID-:::::::::->${util.inspect(idUser)}`);
     
                     User.findById(idUser)
                         .populate('orders')

@@ -25,8 +25,6 @@ router.get('/', function(req, res, next) {
  * CREATE A NEW DESIGN
  */
 router.post('/new', function (req, res, next) {
-         console.log(`DESIGNS NEW `);
-        console.log('body', req.body); 
 
     designImg = `https://s3.eu-central-1.amazonaws.com/deesa/designs/${req.file.key}`;
 
@@ -52,18 +50,23 @@ router.post('/new', function (req, res, next) {
 })
 
 
-router.get('/allDesigns', function(req, res, next) {
-    
-        console.log(`[SERVER] LLEGA ALLDESIGNS`);
-        
-          Design.find({}, function(err, designList) {
-            if( err) {
-              res.json(err)
+router.get('/allDesigns', function (req, res, next) {
+
+    Design
+        .find()
+        .populate({
+            path: 'creator',
+            select: 'username avatarUrl'
+        })
+        .exec((err, designList) => {
+            /*  Design.find({}, function(err, designList) { */
+            if (err) {
+                res.json(err)
             } else {
-              res.status(200).json(designList);
+                res.status(200).json(designList);
             }
-          })
-        });
+        })
+});
 
 /**
  * VIEW A DESIGN
@@ -76,34 +79,16 @@ router.get('/:id', (req, res, next) => {
 
     let idDesign = req.params.id;
 
-         console.log(`ID-:::::::::->${util.inspect(idDesign)}`);
-
-         //POPULATE CREATOR?
             Design.findById(idDesign)
-/*             .populate('creator')
- */            .populate({ path: 'creator', select: 'username avatarUrl' })
+           .populate({ path: 'creator', select: 'username avatarUrl' })
                .exec((err, design) => {
 
-/*     Design.findById(idDesign, (err, design) => { */
                 if (!design) {
                     res.status(401).json({
                         message: "Error, no design founssd"
                     });
                 } else {
         
-/*                     //Only send relevant info. 
-                    let design = {
-                        id: design._id,
-                        designname: design.username,
-                        email: design.email,
-                        role: design.role,
-                        avatarUrl: design.avatarUrl,
-                        designInfo: {
-                            name: design.designInfo.name,
-                            surname: design.designInfo.surname,
-                            birthday: design.designInfo.birthday
-                        }
-                    }; */
                     res.status(200).json({
                         message: "design info",
                         design: design
@@ -143,9 +128,6 @@ router.delete('/:id', function(req, res, next) {
 
   let idDesign = req.params.id;
 
-  console.log(`ENTRA EN DELETE`);
-  
-  console.log(`idDesign --> ${idDesign}`);
   
   Design.findById(idDesign, (err, design) => {
       if (err) {

@@ -28,10 +28,7 @@ var designSchema = new Schema({
  * Store design id reference in user designs
  */
 designSchema.pre('save', function (next) {
-  console.log(`SE METE AL PRE SAVE`);
   let newDesignId = this._id;
-  console.log(`newDesignId-->${newDesignId}`);
-
   var idCreator = new mongoose.Types.ObjectId(this.creator);
 
   User
