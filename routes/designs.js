@@ -26,8 +26,7 @@ router.get('/', function(req, res, next) {
  */
 router.post('/new', function (req, res, next) {
 
-    designImg = `https://s3.eu-central-1.amazonaws.com/deesa/designs/${req.file.key}`;
-
+/*     designImg = `https://s3.eu-central-1.amazonaws.com/deesa/designs/${req.file.key}`;*/
     let newDesign = Design({
         creator: req.body.creator,
         title: req.body.title,

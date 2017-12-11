@@ -30,14 +30,14 @@ router.post("/login", function(req, res) {
 	    res.status(401).json({message:"You have entered an invalid username or password"});
 	  } else {
       bcrypt.compare(password, user.password, function(err, isMatch) {
-        console.log(isMatch);
+        //console.log(isMatch);
         if (!isMatch) {
           res.status(401).json({message:"You have entered an invalid username or password"});
         } else {
-        	console.log('user', user);
+        	//console.log('user', user);
           var payload = {id: user._id, user: user.username};
           var token = jwt.sign(payload, jwtOptions.secretOrKey);
-          console.log(token)
+          //console.log(token)
           res.json({message: "ok", token: token, user: user});
         }
       });
@@ -57,12 +57,8 @@ router.get("/token", passport.authenticate('jwt', { session: false }), (req, res
 
 router.post("/signup", (req, res, next) => {
 
-  console.log(`SE METE EN EL SIGN UP HEROKU`);
-
   let password = req.body.password;
   let username = req.body.username;
-  console.log(`RECIBO USERNAME`);
-  console.log(username);
 
   //console.log(`streetName ${streetName}`);
   if (!username || !password) {
@@ -112,7 +108,6 @@ var newUser = new User({
       }
     });
 
-    console.log(`newUser--> ${newUser}`);
     
 
     newUser.save((err, user) => {
@@ -121,10 +116,7 @@ var newUser = new User({
       } else {
         var payload = {id: user._id, user: user.username};
         var token = jwt.sign(payload, jwtOptions.secretOrKey);
-        console.log(`USER FROM SIGNUP`);
-        console.log(user);
-        console.log(`TOKEN`);
-        console.log(token);
+
        return res.status(200).json({message: "ok", token: token, user: user});
       	// res.status(200).json(user);
       }

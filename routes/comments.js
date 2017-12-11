@@ -16,8 +16,6 @@ const assert = require('assert');
  * Si todas las variables son true entonces hacer el save y los updates.
  */
 router.post('/new', function (req, res, next) {
-    console.log(`COMMENT NEW::::::::::::::::::::::::::::::::::::::::::&&&:&::&: `);
-    console.log('body', req.body);
 
     let newComment = new Comment({
         creator: req.body.creator._id, //id
@@ -25,13 +23,9 @@ router.post('/new', function (req, res, next) {
         message: req.body.message,
     });
 
-    console.log('newComment------------------------------->');
-    console.log(newComment);
-
     //Save new comment
     newComment.save(function (err) {
 
-        console.log(`ENTER SAVE CREATE COMMENT`);
         let idDesign = req.body.design;
         let idUser = req.body.creator;
 
@@ -53,7 +47,6 @@ router.post('/new', function (req, res, next) {
  router.get('/design/:id', (req, res, next) => {
 
      let idDesign = req.params.id;
-     console.log(`ID-:::::::::->${util.inspect(idDesign)}`);
 
      //double populate: retrieve username & avatar of people who comment in this design
      Design.findById(idDesign)
@@ -117,13 +110,11 @@ router.patch('/likes/:idComment/:idUser', function(req, res, next) {
 router.delete('/:id', function(req, res, next) {
     
       let idComment = req.params.id;
-      console.log(`ENTRA EN DELETE idDesign --> ${idComment}`);
       
       Comment.findById(idComment, (err, comment) => {
           if (err) {
               return next(err);
           } else {
-              console.log(`comment ${JSON.stringify(comment)}`);
               let idCreator = comment.creator;
               let idDesign = comment.design;
 
