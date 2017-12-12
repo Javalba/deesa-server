@@ -22,22 +22,25 @@ router.get('/allProductTypes', (req, res, next) => {
 
 //SEARCH PRODUCT BY NAME
 router.get('/productType/:name', (req, res, next) => {
-    
-        let products = global.PRODUCTS;
-        let name = req.params.name;
 
-        products.forEach((element)=>{
-            if(element.name === name){
-                return res.status(200).json({
-                    product: element
-                }); 
-            }
-        });
+    let products = global.PRODUCTS;
+    let name = req.params.name;
+    let flag = true;
 
-        return res.status(200).json({
+    products.forEach((element) => {
+        if (element.name === name) {
+            flag = false;
+            return res.json({
+                product: element
+            });
+        }
+    });
+    if (flag) {
+        return res.json({
             message: "no product finded",
         });
-    });
+    }
+});
 
 /**
  * CREATE A NEW PRODUCT
@@ -69,6 +72,8 @@ router.post('/new', function(req, res, next) {
  * DELETE A PRODUCT AND REFERENCE
  */
 router.delete('/:id', function(req, res, next) {
+
+    console.log(`*****************SE METE EN DELETE PRODUCTS`);
     
       let idProduct = req.params.id;
       
@@ -84,6 +89,7 @@ router.delete('/:id', function(req, res, next) {
                         if (err) {
                             return next(err);
                         }
+                        console.log(`BORRA EL PRODUCTO`);
                         return res.json({
                             message: "Producto eliminado"
                         });
